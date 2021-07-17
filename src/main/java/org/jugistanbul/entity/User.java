@@ -35,7 +35,7 @@ public class User extends PanacheEntity
     }
 
     public static User add(final UserDTO dto) {
-        User user = new User();
+        var user = new User();
         user.username = dto.getUsername();
         user.password = BcryptUtil.bcryptHash(dto.getPassword());
         user.role = dto.getRole();

@@ -54,12 +54,12 @@ public class AuthorizedUserResource
         @Override
         public Response toResponse(Exception exception) {
 
-            int code = 500;
+            var code = 500;
             if (exception instanceof WebApplicationException) {
                 code = ((WebApplicationException) exception).getResponse().getStatus();
             }
 
-            JsonObjectBuilder entityBuilder = Json.createObjectBuilder()
+            var entityBuilder = Json.createObjectBuilder()
                     .add("exceptionType", exception.getClass().getName())
                     .add("code", code);
 

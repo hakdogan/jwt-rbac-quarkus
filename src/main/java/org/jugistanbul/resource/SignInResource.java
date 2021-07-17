@@ -50,7 +50,7 @@ public class SignInResource
     @Produces(MediaType.TEXT_PLAIN)
     public String signIn(@PathParam String username, @PathParam String password) {
 
-            User user = User.findByUsername(username);
+            var user = User.findByUsername(username);
             return user != null && verifyBCryptPassword(user.password, password)?Jwt.issuer(issuer)
                         .upn(username)
                         .claim("userId", user.id)
@@ -64,11 +64,10 @@ public class SignInResource
     public static boolean verifyBCryptPassword(String bCryptPasswordHash, String passwordToVerify) {
 
             try {
-                WildFlyElytronPasswordProvider provider = new WildFlyElytronPasswordProvider();
-
-                PasswordFactory passwordFactory = PasswordFactory.getInstance(BCryptPassword.ALGORITHM_BCRYPT, provider);
-                Password userPasswordDecoded = ModularCrypt.decode(bCryptPasswordHash);
-                Password userPasswordRestored = passwordFactory.translate(userPasswordDecoded);
+                var provider = new WildFlyElytronPasswordProvider();
+                var passwordFactory = PasswordFactory.getInstance(BCryptPassword.ALGORITHM_BCRYPT, provider);
+                var userPasswordDecoded = ModularCrypt.decode(bCryptPasswordHash);
+                var userPasswordRestored = passwordFactory.translate(userPasswordDecoded);
                 return passwordFactory.verify(userPasswordRestored, passwordToVerify.toCharArray());
 
             } catch (NoSuchAlgorithmException | InvalidKeyException | InvalidKeySpecException e) {

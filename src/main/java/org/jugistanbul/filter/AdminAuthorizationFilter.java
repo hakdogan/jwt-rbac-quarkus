@@ -17,7 +17,6 @@ public class AdminAuthorizationFilter implements ContainerRequestFilter
 
     @Override
     public void filter(ContainerRequestContext context) throws IOException {
-
         if(!context.getSecurityContext().isUserInRole("admin")) {
             context.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
         }
