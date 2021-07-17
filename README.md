@@ -2,7 +2,6 @@
 
 This repository is a tutorial for `JUG Istanbul`'s `How to use JWT RBAC with Quarkus` meetup that showing how to verify JSON Web Tokens and provide secured access to the HTTP endpoints using Bearer Token Authorization and Role-Based Access Control in Quarkus.
 
-
 ```java
 @Provider
 @Secured
@@ -70,6 +69,33 @@ public class AdminAuthorizationFilter implements ContainerRequestFilter
 @Transactional
 public User addUser(final UserDTO dto){
     return User.add(dto);
+}
+```
+## Usage examples
+
+```shell
+export token=$(http POST localhost:8080/api/signIn/guest/12345)
+http POST http://localhost:8080/api/secured/addUser \
+"username"="testUser", \
+"password"="12345", \
+"role"="user" 'Authorization: Bearer '$token
+HTTP/1.1 401 Unauthorized
+Content-Length: 0
+
+export token=$(http POST localhost:8080/api/signIn/hakdogan/12345)
+http POST http://localhost:8080/api/secured/addUser \
+"username"="testUser", \
+"password"="12345", \
+"role"="user" 'Authorization: Bearer '$token
+HTTP/1.1 200 OK
+Content-Length: 119
+Content-Type: application/json
+
+{
+    "id": 4,
+    "password": "$2a$10$.x9NaYIin1EqI/C5nsxAD.6cisP4HghRgDNmfG/N0nQkk8AeAGAcW",
+    "role": "user",
+    "username": "testUser,"
 }
 ```
 
