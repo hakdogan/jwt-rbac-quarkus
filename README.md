@@ -107,6 +107,6 @@ Content-Type: application/json
 
 ## How to run
 ```shell
-#You must run generateRSA.sh script before running the application
+#You must run rsaKeyPair.sh script before running the application
 mvn quarkus:dev
 ```
