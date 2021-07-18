@@ -16,12 +16,12 @@ public class AuthenticationFilter implements ContainerRequestFilter
     @Override
     public void filter(ContainerRequestContext context) throws IOException {
 
-        final String method = context.getMethod();
-        UriInfo uriInfo = context.getUriInfo();
+        var method = context.getMethod();
+        var uriInfo = context.getUriInfo();
 
-        final String path = uriInfo.getPath();
-        final String remoteAddress = httpServerRequest.remoteAddress().toString();
-        boolean auth = null != context.getHeaders().getFirst("Authorization");
+        var path = uriInfo.getPath();
+        var remoteAddress = httpServerRequest.remoteAddress().toString();
+        var auth = null != context.getHeaderString(HttpHeaders.AUTHORIZATION);
 
         if(!auth) {
             context.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
