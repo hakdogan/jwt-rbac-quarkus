@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 import java.io.IOException;
@@ -33,7 +34,7 @@ public class AuthenticationFilter implements ContainerRequestFilter
 
         var path = uriInfo.getPath();
         var remoteAddress = httpServerRequest.remoteAddress().toString();
-        var auth = null != context.getHeaders().getFirst("Authorization");
+        var auth = null != context.getHeaderString(HttpHeaders.AUTHORIZATION);
 
         if(!auth) {
             context.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
