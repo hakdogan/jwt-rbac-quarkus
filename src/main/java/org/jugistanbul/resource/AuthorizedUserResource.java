@@ -8,14 +8,12 @@ import org.jugistanbul.filter.SecuredForAdmin;
 
 import javax.enterprise.context.RequestScoped;
 import javax.json.Json;
-import javax.json.JsonObjectBuilder;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
-import java.util.List;
 
 /**
  * @author hakdogan (huseyin.akdogan@patikaglobal.com)
@@ -30,22 +28,22 @@ public class AuthorizedUserResource
 {
     @GET
     @Path("/allUsers")
-    public List<User> fetchAllUsers(){
-        return User.listAll();
+    public Response fetchAllUsers(){
+        return Response.ok(User.listAll(), MediaType.APPLICATION_JSON_TYPE).build();
     }
 
     @GET
     @Path("/findUsersByRole/{role}")
-    public List<User> findUsersByRole(@PathParam String role){
-        return User.findByRole(role);
+    public Response findUsersByRole(@PathParam String role){
+        return Response.ok(User.findByRole(role), MediaType.APPLICATION_JSON_TYPE).build();
     }
 
     @POST
     @Path("/addUser")
     @SecuredForAdmin
     @Transactional
-    public User addUser(final UserDTO dto){
-        return User.add(dto);
+    public Response addUser(final UserDTO dto){
+        return Response.ok(User.add(dto), MediaType.APPLICATION_JSON_TYPE).build();
     }
 
     @Provider
