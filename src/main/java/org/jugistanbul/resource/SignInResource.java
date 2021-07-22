@@ -77,7 +77,6 @@ public class SignInResource {
                 .upn(user.username)
                 .claim("userId", user.id)
                 .groups(user.role)
-                .claim("userId", user.id)
                 .expiresIn(Duration.ofMinutes(30))
                 .sign();
 
